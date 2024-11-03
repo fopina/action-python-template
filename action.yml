@@ -19,6 +19,3 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.number-one }}
-    - ${{ inputs.number-two }}

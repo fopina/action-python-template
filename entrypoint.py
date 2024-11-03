@@ -1,21 +1,40 @@
 #!/usr/bin/env -S python3 -u
-
 import os
-import sys
+
+import requests
+
+
+# Set the output value by writing to the outputs in the Environment File, mimicking the behavior defined here:
+# https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+def set_github_action_output(output_name, output_value):
+    output_file = os.getenv('GITHUB_OUTPUT')
+    line = f'{output_name}={output_value}\n'
+
+    if output_file:
+        with open(output_file, 'a') as f:
+            f.write(line)
+    else:
+        # to be able to use from terminal
+        print(line, end=None)
+
+
+def find_a_joke():
+    r = requests.get('https://v2.jokeapi.dev/joke/Any?type=single')
+    r.raise_for_status()
+    return r.json()['joke']
+
+
+def main():
+    number_one = os.getenv('INPUT_NUMBER-ONE', '')
+    number_two = os.getenv('INPUT_NUMBER-TWO', '')
+
+    if number_one.isdigit() and number_two.isdigit():
+        output = int(number_one) + int(number_two)
+    else:
+        output = find_a_joke()
+
+    set_github_action_output('sum', output)
+
 
 if __name__ == '__main__':
-    # Rename these variables to something meaningful
-    # input1 = sys.argv[1]
-    # input2 = sys.argv[2]
-    print('ARGV', sys.argv)
-
-    # Fake example outputs
-    output1 = 'Hello'
-    output2 = 'World'
-
-    # This is how you produce workflow outputs.
-    # Make sure corresponds to output variable names in action.yml
-    if 'GITHUB_OUTPUT' in os.environ:
-        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-            print('{0}={1}'.format('output-one', output1), file=f)
-            print('{0}={1}'.format('output-two', output2), file=f)
+    main()
