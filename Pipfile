@@ -10,6 +10,7 @@ requests = "<3,>=2"
 ruff = "*"
 pytest = "*"
 pytest-cov = "*"
+pytest-socket = "*"
 
 [requires]
 python_version = "3.10"
