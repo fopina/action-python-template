@@ -5,8 +5,9 @@ import sys
 
 if __name__ == '__main__':
     # Rename these variables to something meaningful
-    input1 = sys.argv[1]
-    input2 = sys.argv[2]
+    # input1 = sys.argv[1]
+    # input2 = sys.argv[2]
+    print('ARGV', sys.argv)
 
     # Fake example outputs
     output1 = 'Hello'

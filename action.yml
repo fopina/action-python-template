@@ -1,27 +1,24 @@
-# Make sure to change the action name here (must be unique).
+# TODO: make sure to change the action name here (must be unique).
 # Update the rest as needed.
-name: 'unique-action-goes-here'
-description: 'BRIEF DESCRIPTION OF YOUR ACTION'
-branding: # Look at documentation for branding options/requirements. These are my favorites.
+name: 'python-template'
+description: 'Sum 2 numbers and a little extra'
+branding: # TODO: choose yours from https://github.com/haya14busa/github-action-brandings
   icon: 'book-open'
   color: 'green'
+# TODO: update with your inputs and outputs
 inputs:
-  input-one:  
-    description: 'Description of input-one'
+  number-one:  
+    description: 'Choose a number'
     required: false
-    default: 'default value goes here'
-  input-two:
-    description: 'Description of input-two'
+  number-two:
+    description: 'Choose another number'
     required: false
-    default: 'default value goes here'
 outputs:
-  output-one:
-    description: 'Description of output-one'
-  output-two:
-    description: 'Description of output-two'	
+  sum:
+    description: 'Sum of both numbers, if provided - a joke otherwise'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.input-one }}
-    - ${{ inputs.input-two }}
+    - ${{ inputs.number-one }}
+    - ${{ inputs.number-two }}
