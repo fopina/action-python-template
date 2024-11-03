@@ -10,7 +10,7 @@ class TestSomething(unittest.TestCase):
         # Unit test cases would go in these
         # test methods to test the various
         # Python functions, methods, etc.
-        pass
+        self.assertEqual(1, 1)
 
     def test_anothertestcase(self):
-        pass
+        asd
