@@ -33,20 +33,14 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           platforms: linux/amd64,linux/arm64
-      - name: Dump github context
-        run:   echo "$GITHUB_CONTEXT"
-        shell: bash
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        
 
-      # - name: Build and push image - release
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     push: true
-      #     platforms: linux/amd64,linux/arm64
-      #     cache-from: ghcr.io/fopina/defectdojo-toolkit:latest-build-cache
-      #     cache-to: ghcr.io/fopina/defectdojo-toolkit:latest-build-cache
-      #     tags: |
-      #       ghcr.io/fopina/defectdojo-toolkit:${{ github.sha }}
-      #       ghcr.io/fopina/defectdojo-toolkit:latest
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64
+          cache-from: ghcr.io/fopina/defectdojo-toolkit:latest-build-cache
+          cache-to: ghcr.io/fopina/defectdojo-toolkit:latest-build-cache
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:latest

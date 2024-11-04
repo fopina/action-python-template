@@ -18,4 +18,5 @@ outputs:
     description: 'Sum of both numbers, if provided - a joke otherwise'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: docker://ghcr.io/fopina/action-python-template:latest
+  # image: 'Dockerfile'
