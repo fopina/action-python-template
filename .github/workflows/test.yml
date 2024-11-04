@@ -3,6 +3,8 @@ name: 🧪 tests
 on:
   workflow_call:
   push:
+    # paths-ignore:
+    #   - .github/**
 
 jobs:
   tests:
@@ -38,3 +40,20 @@ jobs:
         run: |
           echo Lint check failed, check its log
           exit 1
+     
+      - name: Force local build
+        run: |
+          sed -i 's/^  image\:.*/  image\: Dockerfile/g' action.yml  
+
+      - name: Integration test
+        uses: ./
+        id: sumit
+        with:
+          number-one: 2
+          number-two: 1
+
+      - name: Assert integration test
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: |
+          pytest tests/integration.py

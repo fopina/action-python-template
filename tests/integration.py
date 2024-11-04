@@ -1,18 +1,22 @@
+import json
+import os
 import unittest
 
 
 class TestIntegration(unittest.TestCase):
-    def test_sometestcase(self):
-        # The test cases here should use appropriate
-        # asserts to verify that the output of the
-        # integration is correct.
-        # That is, after separately running the
-        # unit test cases (see tests.py), your
-        # workflow should run the action locally
-        # against the action's own repository,
-        # and then after that, run these integration
-        # tests.
-        pass
+    """
+    This module does not start with test_ intentionally.
+    This prevents simple `pytest` from picking it up as it should only run inside the test action
+    """
 
-    def test_anothertestcase(self):
-        pass
+    def test_sumit(self):
+        """
+        Assert integration run for:
+            ...
+            id: sumit
+            with:
+                number-one: 2
+                number-two: 1
+        """
+        data = json.loads(os.getenv('STEPS_CONTEXT'))
+        self.assertEqual(data['sumit']['outputs']['sum'], '3')

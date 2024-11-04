@@ -3,10 +3,10 @@ permissions: write-all
 
 on:
   push:
-    # branches:
-    #   - main
-    # paths-ignore:
-    #   - .github/**
+    branches:
+      - main
+    paths-ignore:
+      - .github/**
 
 jobs:
   build:
@@ -43,10 +43,12 @@ jobs:
           cache-to: ghcr.io/${{ github.repository }}:latest-build-cache
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}:v1
             ghcr.io/${{ github.repository }}:latest
 
       - name: Show summary
         run: |
           echo 'Published:  ' >> ${GITHUB_STEP_SUMMARY}
           echo '* `ghcr.io/${{ github.repository }}:${{ github.sha }}`' >> ${GITHUB_STEP_SUMMARY}
+          echo '* `ghcr.io/${{ github.repository }}:v1`' >> ${GITHUB_STEP_SUMMARY}
           echo '* `ghcr.io/${{ github.repository }}:latest`' >> ${GITHUB_STEP_SUMMARY}
