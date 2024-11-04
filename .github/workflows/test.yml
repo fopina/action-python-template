@@ -40,3 +40,13 @@ jobs:
         run: |
           echo Lint check failed, check its log
           exit 1
+     
+      - name: Integration test
+        uses: ./
+        id: sumit
+        with:
+          number-one: 2
+          number-two: 1
+    
+      - run: |
+          echo ${{ steps.sumit.outputs.sum }}
