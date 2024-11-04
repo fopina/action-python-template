@@ -23,7 +23,8 @@ A template repository for GitHub Actions implemented in Python.
 ---
 
 
-[![Build and Test](https://github.com/actions/checkout/actions/workflows/test.yml/badge.svg)](https://github.com/actions/checkout/actions/workflows/test.yml)
+[![Test](https://github.com/fopina/action-python-template/actions/workflows/test.yml/badge.svg)](https://github.com/fopina/action-python-template/actions/workflows/test.yml)
+[![Test](https://github.com/fopina/action-python-template/actions/workflows/publish-image.yml/badge.svg)](https://github.com/fopina/action-python-template/actions/workflows/publish-image.yml)
 
 # action-python-template
 
@@ -33,53 +34,11 @@ It also adds a joke to output `joke` to brighten your day.
 
 # What's new
 
-Please refer to the [release page](https://github.com/actions/checkout/releases/latest) for the latest release notes.
+Please refer to the [release page](https://github.com/fopina/action-python-template/releases/latest) for the latest release notes.
 
 # Usage
 
-<!-- start usage -->
-```yaml
-name: auto update
-
-on:
-  schedule:
-    - cron: "0 12 * * *"
-  workflow_dispatch:
-
-jobs:
-  autoupdate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: scan target with template
-        id: autoupdate
-        uses: fopina/action-python-template@dev
-      - name: test sum2
-        run: |
-          cat <<'EOF'
-          ${{ steps.autoupdate.outputs.sum }}
-          EOF
-      - name: scan target with template
-        id: another
-        uses: fopina/action-python-template@dev
-        with:
-          number-one: 2
-          number-two: 3
-      - name: test sum2
-        run: |
-          echo ${{ steps.another.outputs.sum }}
-- uses: fopina/action-python-template@v1
-  with:
-    # first number to sum
-    number-one: ''
-
-    # second number to sum
-    number-two: ''
-
-    # imaginary input that would have a default for documentation purposes
-    # Default: ${{ github.token }}
-    # token: ''
-```
-<!-- end usage -->
+See [action.yml](action.yml)
 
 # Scenarios
 
@@ -89,17 +48,25 @@ jobs:
 ## Sum two numbers
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: fopina/action-python-template@v1
+  id: sumit
   with:
-    sparse-checkout: .
+    number-one: 3
+    number-two: 5
+
+- run: |
+    echo ${{ steps.sumit.outputs.sum }}      
 ```
 
 ## Easter egg
 
 ```yaml
-- uses: actions/checkout@v4
-  with:
-    sparse-checkout: |
-      .github
-      src
+- uses: fopina/action-python-template@v1
+  id: sumit
+
+# use heredocs as this output might have special characters
+- run: |
+    cat <<'EOF'
+    ${{ steps.sumit.outputs.sum }}
+    EOF
 ```
