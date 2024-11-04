@@ -1,16 +1,20 @@
-# If you need Python 3 and the GitHub CLI, then use:
-FROM cicirello/pyaction:4
+FROM python:3.10-alpine AS base
 
-# If all you need is Python 3, use:
-# FROM cicirello/pyaction-lite:3
+# --- builder
+FROM base AS builder
+WORKDIR /app
+WORKDIR /
 
-# If Python 3 + git is sufficient, then use:
-# FROM cicirello/pyaction:3
+COPY Pipfile.lock .
+RUN pip install pipenv
+RUN pipenv requirements > requirements.txt
+RUN pip install --target=/app -r requirements.txt
 
-# To pull from the GitHub Container Registry instead, use one of these:
-# FROM ghcr.io/cicirello/pyaction-lite:3
-# FROM ghcr.io/cicirello/pyaction:4
-# FROM ghcr.io/cicirello/pyaction:3
+# --- main
 
+FROM base
+COPY --from=builder /app /app
+ENV PYTHONPATH=/app
 COPY entrypoint.py /entrypoint.py
-ENTRYPOINT ["/entrypoint.py"]
+
+ENTRYPOINT ["python3", "-u", "/entrypoint.py"]
