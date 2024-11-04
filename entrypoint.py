@@ -31,7 +31,7 @@ def main():
     if number_one.isdigit() and number_two.isdigit():
         output = int(number_one) + int(number_two)
     else:
-        output = find_a_joke()
+        output = find_a_joke().replace('\n', ' ')
 
     set_github_action_output('sum', output)
 
