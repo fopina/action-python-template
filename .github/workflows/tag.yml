@@ -1,4 +1,4 @@
-name: 'update-v-tag'
+name: '🏷️ update v1 tag'
 on:
   push:
     tags:
