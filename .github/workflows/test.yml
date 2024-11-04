@@ -3,6 +3,8 @@ name: 🧪 tests
 on:
   workflow_call:
   push:
+    paths-ignore:
+      - .github/**
 
 jobs:
   tests:
