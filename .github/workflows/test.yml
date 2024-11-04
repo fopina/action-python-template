@@ -41,6 +41,10 @@ jobs:
           echo Lint check failed, check its log
           exit 1
      
+      - name: Force local build
+        run: |
+          sed -i 's/^  image\:.*/  image\: Dockerfile/g' action.yml  
+
       - name: Integration test
         uses: ./
         id: sumit
@@ -48,5 +52,4 @@ jobs:
           number-one: 2
           number-two: 1
     
-      - run: |
-          echo ${{ steps.sumit.outputs.sum }}
+      - run: pytest tests/integration.py
