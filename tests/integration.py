@@ -1,3 +1,4 @@
+import os
 import unittest
 
 
@@ -15,4 +16,5 @@ class TestIntegration(unittest.TestCase):
         pass
 
     def test_anothertestcase(self):
-        pass
+        print(os.getenv('STEPS_CONTEXT'))
+        self.assertEqual(os.getenv('STEPS_CONTEXT'), 1)

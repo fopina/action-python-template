@@ -51,6 +51,9 @@ jobs:
         with:
           number-one: 2
           number-two: 1
-    
-      - run: env
-      - run: pytest tests/integration.py
+
+      - name: Assert integration test
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: |
+          pytest tests/integration.py
