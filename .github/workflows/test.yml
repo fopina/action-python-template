@@ -52,4 +52,5 @@ jobs:
           number-one: 2
           number-two: 1
     
+      - run: env
       - run: pytest tests/integration.py
